@@ -93,11 +93,11 @@ impl CfgRegA {
         CfgRegA(bits)
     }
 
-    pub fn value<I2C>(&mut self, i2c: &mut I2C) -> Result<u8, I2C::Error>
+    pub async fn value<I2C>(&mut self, i2c: &mut I2C) -> Result<u8, I2C::Error>
     where
-        I2C: embedded_hal::i2c::I2c,
+        I2C: embedded_hal_async::i2c::I2c,
     {
-        self.read(i2c, ADDR)
+        self.read(i2c, ADDR).await
     }
 
     pub fn data_rate(&self) -> f32 {
@@ -110,13 +110,13 @@ impl CfgRegA {
         }
     }
 
-    pub fn set_data_rate<I2C>(&mut self, i2c: &mut I2C, value: Odr) -> Result<(), I2C::Error>
+    pub async fn set_data_rate<I2C>(&mut self, i2c: &mut I2C, value: Odr) -> Result<(), I2C::Error>
     where
-        I2C: embedded_hal::i2c::I2c,
+        I2C: embedded_hal_async::i2c::I2c,
     {
         self.0 &= !(ODR_MASK << ODR_OFFSET);
         self.0 |= (value as u8) << ODR_OFFSET;
-        self.write(i2c, ADDR, self.0)
+        self.write(i2c, ADDR, self.0).await
     }
 
     pub fn mode(&self) -> Mode {
@@ -129,64 +129,64 @@ impl CfgRegA {
         }
     }
 
-    pub fn set_mode<I2C>(&mut self, i2c: &mut I2C, value: Mode) -> Result<(), I2C::Error>
+    pub async fn set_mode<I2C>(&mut self, i2c: &mut I2C, value: Mode) -> Result<(), I2C::Error>
     where
-        I2C: embedded_hal::i2c::I2c,
+        I2C: embedded_hal_async::i2c::I2c,
     {
         self.0 &= !(MODE_MASK << MODE_OFFSET);
         self.0 |= (value as u8) << MODE_OFFSET;
-        self.write(i2c, ADDR, self.0)
+        self.write(i2c, ADDR, self.0).await
     }
 
     pub fn comp_temp_en(&mut self) -> bool {
         self.0 & (1 << COMP_TEMP_EN) != 0
     }
 
-    pub fn set_comp_temp_en<I2C>(&mut self, i2c: &mut I2C, value: bool) -> Result<(), I2C::Error>
+    pub async fn set_comp_temp_en<I2C>(&mut self, i2c: &mut I2C, value: bool) -> Result<(), I2C::Error>
     where
-        I2C: embedded_hal::i2c::I2c,
+        I2C: embedded_hal_async::i2c::I2c,
     {
         self.0 &= !(1 << COMP_TEMP_EN);
         self.0 |= (value as u8) << COMP_TEMP_EN;
-        self.write(i2c, ADDR, self.0)
+        self.write(i2c, ADDR, self.0).await
     }
 
     pub fn reboot(&mut self) -> bool {
         self.0 & (1 << REBOOT) != 0
     }
 
-    pub fn set_reboot<I2C>(&mut self, i2c: &mut I2C, value: bool) -> Result<(), I2C::Error>
+    pub async fn set_reboot<I2C>(&mut self, i2c: &mut I2C, value: bool) -> Result<(), I2C::Error>
     where
-        I2C: embedded_hal::i2c::I2c,
+        I2C: embedded_hal_async::i2c::I2c,
     {
         self.0 &= !(1 << REBOOT);
         self.0 |= (value as u8) << REBOOT;
-        self.write(i2c, ADDR, self.0)
+        self.write(i2c, ADDR, self.0).await
     }
 
     pub fn soft_rst(&mut self) -> bool {
         self.0 & (1 << SOFT_RST) != 0
     }
 
-    pub fn set_soft_rst<I2C>(&mut self, i2c: &mut I2C, value: bool) -> Result<(), I2C::Error>
+    pub async fn set_soft_rst<I2C>(&mut self, i2c: &mut I2C, value: bool) -> Result<(), I2C::Error>
     where
-        I2C: embedded_hal::i2c::I2c,
+        I2C: embedded_hal_async::i2c::I2c,
     {
         self.0 &= !(1 << SOFT_RST);
         self.0 |= (value as u8) << SOFT_RST;
-        self.write(i2c, ADDR, self.0)
+        self.write(i2c, ADDR, self.0).await
     }
 
     pub fn lp(&mut self) -> bool {
         self.0 & (1 << LP) != 0
     }
 
-    pub fn set_lp<I2C>(&mut self, i2c: &mut I2C, value: bool) -> Result<(), I2C::Error>
+    pub async fn set_lp<I2C>(&mut self, i2c: &mut I2C, value: bool) -> Result<(), I2C::Error>
     where
-        I2C: embedded_hal::i2c::I2c,
+        I2C: embedded_hal_async::i2c::I2c,
     {
         self.0 &= !(1 << LP);
         self.0 |= (value as u8) << LP;
-        self.write(i2c, ADDR, self.0)
+        self.write(i2c, ADDR, self.0).await
     }
 }

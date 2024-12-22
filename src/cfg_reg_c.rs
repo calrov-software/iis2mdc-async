@@ -60,88 +60,88 @@ impl CfgRegC {
         CfgRegC(bits)
     }
 
-    pub fn value<I2C>(&mut self, i2c: &mut I2C) -> Result<u8, I2C::Error>
+    pub async fn value<I2C>(&mut self, i2c: &mut I2C) -> Result<u8, I2C::Error>
     where
-        I2C: embedded_hal::i2c::I2c,
+        I2C: embedded_hal_async::i2c::I2c,
     {
-        self.read(i2c, ADDR)
+        self.read(i2c, ADDR).await
     }
 
     pub fn int_on_pin(&mut self) -> bool {
         self.0 & (1 << INT_ON_PIN) != 0
     }
 
-    pub fn set_int_on_pin<I2C>(&mut self, i2c: &mut I2C, value: bool) -> Result<(), I2C::Error>
+    pub async fn set_int_on_pin<I2C>(&mut self, i2c: &mut I2C, value: bool) -> Result<(), I2C::Error>
     where
-        I2C: embedded_hal::i2c::I2c,
+        I2C: embedded_hal_async::i2c::I2c,
     {
         self.0 &= !(1 << INT_ON_PIN);
         self.0 |= (value as u8) << INT_ON_PIN;
-        self.write(i2c, ADDR, self.0)
+        self.write(i2c, ADDR, self.0).await
     }
 
     pub fn i2c_dis(&mut self) -> bool {
         self.0 & (1 << I2C_DIS) != 0
     }
 
-    pub fn set_i2c_dis<I2C>(&mut self, i2c: &mut I2C, value: bool) -> Result<(), I2C::Error>
+    pub async fn set_i2c_dis<I2C>(&mut self, i2c: &mut I2C, value: bool) -> Result<(), I2C::Error>
     where
-        I2C: embedded_hal::i2c::I2c,
+        I2C: embedded_hal_async::i2c::I2c,
     {
         self.0 &= !(1 << I2C_DIS);
         self.0 |= (value as u8) << I2C_DIS;
-        self.write(i2c, ADDR, self.0)
+        self.write(i2c, ADDR, self.0).await
     }
 
     pub fn bdu(&mut self) -> bool {
         self.0 & (1 << BDU) != 0
     }
 
-    pub fn set_bdu<I2C>(&mut self, i2c: &mut I2C, value: bool) -> Result<(), I2C::Error>
+    pub async fn set_bdu<I2C>(&mut self, i2c: &mut I2C, value: bool) -> Result<(), I2C::Error>
     where
-        I2C: embedded_hal::i2c::I2c,
+        I2C: embedded_hal_async::i2c::I2c,
     {
         self.0 &= !(1 << BDU);
         self.0 |= (value as u8) << BDU;
-        self.write(i2c, ADDR, self.0)
+        self.write(i2c, ADDR, self.0).await
     }
 
     pub fn ble(&mut self) -> bool {
         self.0 & (1 << BLE) != 0
     }
 
-    pub fn set_ble<I2C>(&mut self, i2c: &mut I2C, value: bool) -> Result<(), I2C::Error>
+    pub async fn set_ble<I2C>(&mut self, i2c: &mut I2C, value: bool) -> Result<(), I2C::Error>
     where
-        I2C: embedded_hal::i2c::I2c,
+        I2C: embedded_hal_async::i2c::I2c,
     {
         self.0 &= !(1 << BLE);
         self.0 |= (value as u8) << BLE;
-        self.write(i2c, ADDR, self.0)
+        self.write(i2c, ADDR, self.0).await
     }
 
     pub fn self_test(&mut self) -> bool {
         self.0 & (1 << SELF_TEST) != 0
     }
 
-    pub fn set_self_test<I2C>(&mut self, i2c: &mut I2C, value: bool) -> Result<(), I2C::Error>
+    pub async fn set_self_test<I2C>(&mut self, i2c: &mut I2C, value: bool) -> Result<(), I2C::Error>
     where
-        I2C: embedded_hal::i2c::I2c,
+        I2C: embedded_hal_async::i2c::I2c,
     {
         self.0 &= !(1 << SELF_TEST);
         self.0 |= (value as u8) << SELF_TEST;
-        self.write(i2c, ADDR, self.0)
+        self.write(i2c, ADDR, self.0).await
     }
 
     pub fn drdy_on_pin(&mut self) -> bool {
         self.0 & (1 << DRDY_ON_PIN) != 0
     }
 
-    pub fn set_drdy_on_pin<I2C>(&mut self, i2c: &mut I2C, value: bool) -> Result<(), I2C::Error>
+    pub async fn set_drdy_on_pin<I2C>(&mut self, i2c: &mut I2C, value: bool) -> Result<(), I2C::Error>
     where
-        I2C: embedded_hal::i2c::I2c,
+        I2C: embedded_hal_async::i2c::I2c,
     {
         self.0 &= !(1 << DRDY_ON_PIN);
         self.0 |= (value as u8) << DRDY_ON_PIN;
-        self.write(i2c, ADDR, self.0)
+        self.write(i2c, ADDR, self.0).await
     }
 }

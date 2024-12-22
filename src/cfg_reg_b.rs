@@ -71,79 +71,79 @@ impl CfgRegB {
         CfgRegB(bits)
     }
 
-    pub fn value<I2C>(&mut self, i2c: &mut I2C) -> Result<u8, I2C::Error>
+    pub async fn value<I2C>(&mut self, i2c: &mut I2C) -> Result<u8, I2C::Error>
     where
-        I2C: embedded_hal::i2c::I2c,
+        I2C: embedded_hal_async::i2c::I2c,
     {
-        self.read(i2c, ADDR)
+        self.read(i2c, ADDR).await
     }
 
     pub fn off_canc_one_shot(&mut self) -> bool {
         self.0 & (1 << OFF_CANC_ONE_SHOT) != 0
     }
 
-    pub fn set_off_canc_one_shot<I2C>(
+    pub async fn set_off_canc_one_shot<I2C>(
         &mut self,
         i2c: &mut I2C,
         value: bool,
     ) -> Result<(), I2C::Error>
     where
-        I2C: embedded_hal::i2c::I2c,
+        I2C: embedded_hal_async::i2c::I2c,
     {
         self.0 &= !(1 << OFF_CANC_ONE_SHOT);
         self.0 |= (value as u8) << OFF_CANC_ONE_SHOT;
-        self.write(i2c, ADDR, self.0)
+        self.write(i2c, ADDR, self.0).await
     }
 
     pub fn int_on_dataoff(&mut self) -> bool {
         self.0 & (1 << INT_ON_DATAOFF) != 0
     }
 
-    pub fn set_int_on_dataoff<I2C>(&mut self, i2c: &mut I2C, value: bool) -> Result<(), I2C::Error>
+    pub async fn set_int_on_dataoff<I2C>(&mut self, i2c: &mut I2C, value: bool) -> Result<(), I2C::Error>
     where
-        I2C: embedded_hal::i2c::I2c,
+        I2C: embedded_hal_async::i2c::I2c,
     {
         self.0 &= !(1 << INT_ON_DATAOFF);
         self.0 |= (value as u8) << INT_ON_DATAOFF;
-        self.write(i2c, ADDR, self.0)
+        self.write(i2c, ADDR, self.0).await
     }
 
     pub fn set_freq(&mut self) -> bool {
         self.0 & (1 << SET_FREQ) != 0
     }
 
-    pub fn set_set_freq<I2C>(&mut self, i2c: &mut I2C, value: bool) -> Result<(), I2C::Error>
+    pub async fn set_set_freq<I2C>(&mut self, i2c: &mut I2C, value: bool) -> Result<(), I2C::Error>
     where
-        I2C: embedded_hal::i2c::I2c,
+        I2C: embedded_hal_async::i2c::I2c,
     {
         self.0 &= !(1 << SET_FREQ);
         self.0 |= (value as u8) << SET_FREQ;
-        self.write(i2c, ADDR, self.0)
+        self.write(i2c, ADDR, self.0).await
     }
 
     pub fn off_canc(&mut self) -> bool {
         self.0 & (1 << OFF_CANC) != 0
     }
 
-    pub fn set_off_canc<I2C>(&mut self, i2c: &mut I2C, value: bool) -> Result<(), I2C::Error>
+    pub async fn set_off_canc<I2C>(&mut self, i2c: &mut I2C, value: bool) -> Result<(), I2C::Error>
     where
-        I2C: embedded_hal::i2c::I2c,
+        I2C: embedded_hal_async::i2c::I2c,
     {
         self.0 &= !(1 << OFF_CANC);
         self.0 |= (value as u8) << OFF_CANC;
-        self.write(i2c, ADDR, self.0)
+        self.write(i2c, ADDR, self.0).await
     }
 
     pub fn lpf(&mut self) -> bool {
         self.0 & (1 << LPF) != 0
     }
 
-    pub fn set_lpf<I2C>(&mut self, i2c: &mut I2C, value: bool) -> Result<(), I2C::Error>
+    pub async fn set_lpf<I2C>(&mut self, i2c: &mut I2C, value: bool) -> Result<(), I2C::Error>
     where
-        I2C: embedded_hal::i2c::I2c,
+        I2C: embedded_hal_async::i2c::I2c,
     {
         self.0 &= !(1 << LPF);
         self.0 |= (value as u8) << LPF;
-        self.write(i2c, ADDR, self.0)
+        self.write(i2c, ADDR, self.0).await
     }
 }
